@@ -21,7 +21,11 @@ def update_movie_batch(title, db, update_batch):
 
 def update_movie_names():
     imdb_websites = [
-        'https://www.imdb.com/search/title/?groups=top_1000&start='
+        'https://www.imdb.com/search/title/?groups=top_1000&start=',
+        'https://www.imdb.com/search/title/?groups=top_1000&sort=user_rating,desc&start=',
+        'https://www.imdb.com/search/title/?groups=top_1000&sort=num_votes,desc&start=',
+        'https://www.imdb.com/search/title/?groups=top_1000&sort=boxoffice_gross_us,desc&start=',
+        'https://www.imdb.com/search/title/?groups=top_1000&sort=release_date,desc&start='
     ]
 
     db = firestore.Client()
@@ -34,6 +38,8 @@ def update_movie_names():
     num_batch_updates = 0
 
     for base_website in imdb_websites:
+        print(f'Processing {base_website}...')
+
         for start_entry_num in range(1, total_entries, entries_per_page):
             imdb_website = f'{base_website}{start_entry_num}'
 
